@@ -90,57 +90,44 @@ Unlike real-time trading platforms, EquiMind uses a **batch data pipeline** arch
 
 ### Prerequisites
 
-- Java 21+
-- Node.js 18+
-- Python 3.11+
-- PostgreSQL 16+
-- Docker & Docker Compose
-- LM Studio (with a GGUF model loaded)
+- Java 21+ ([Adoptium Temurin](https://adoptium.net/))
+- Node.js 20+ ([nodejs.org](https://nodejs.org/))
+- Python 3.11+ ([python.org](https://www.python.org/))
+- PostgreSQL 16+ ([postgresql.org](https://www.postgresql.org/))
+- LM Studio ([lmstudio.ai](https://lmstudio.ai/)) — needed in Phase 5
 
-### Quick Start (Docker)
+### Setup
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/equimind.git
-cd equimind
+git clone https://github.com/24cs062/Stock-Analysis.git
+cd Stock-Analysis
 
-# Start all services
-docker-compose up -d
+# Copy environment config
+cp .env.example .env
 
-# Access the application
-# Frontend:  http://localhost:3000
-# API:       http://localhost:8080
-# LM Studio: http://localhost:1234
-```
-
-### Manual Setup
-
-```bash
-# 1. Database
+# 1. Create database & load schema
 createdb equimind
-psql equimind < sql/schema.sql
+psql -d equimind -f sql/schema.sql
 
-# 2. Backend
+# 2. Start Backend (Terminal 1)
 cd backend
-./mvnw spring-boot:run
+mvnw spring-boot:run
+# → http://localhost:8080/api/health
 
-# 3. Data Pipeline
-cd data-pipeline
-pip install -r requirements.txt
-python main.py
-
-# 4. Frontend
+# 3. Start Frontend (Terminal 2)
 cd frontend
 npm install
 npm run dev
+# → http://localhost:5173
 ```
+
+
+> **Note**: This project runs entirely offline on your local machine. No cloud deployment, no Docker required.
 
 ### Demo Mode
 
-```bash
-# Run with pre-loaded demo data (no external API needed)
-DATA_MODE=DEMO docker-compose up -d
-```
+Set `DATA_MODE=DEMO` in your `.env` file to use pre-loaded data without external API calls.
 
 ---
 
