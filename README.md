@@ -1,73 +1,121 @@
-# EquiMind
+<div align="center">
 
-> A cached, explainable equity research platform for a fixed US-stock universe, with classical financial analysis and a locally hosted AI explanation layer.
+<h1>⚡ EquiMind</h1>
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)]()
-[![Java](https://img.shields.io/badge/Java-21-orange.svg)]()
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-green.svg)]()
-[![React](https://img.shields.io/badge/React-18-blue.svg)]()
-[![Python](https://img.shields.io/badge/Python-3.11+-yellow.svg)]()
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue.svg)]()
-[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED.svg)]()
+<p align="center">
+  <strong>AI-Enhanced Equity Research Platform</strong><br>
+  Cached · Explainable · Locally-Hosted · S&amp;P 500 Universe
+</p>
 
----
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square" alt="License"></a>
+  <br>
+  <a href="https://www.java.com"><img src="https://img.shields.io/badge/Java-21-ED8B00?style=flat-square&logo=openjdk&logoColor=white" alt="Java 21"></a>
+  <a href="https://spring.io"><img src="https://img.shields.io/badge/Spring%20Boot-3.x-6DB33F?style=flat-square&logo=spring-boot&logoColor=white" alt="Spring Boot"></a>
+  <a href="https://react.dev"><img src="https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React"></a>
+  <a href="https://www.python.org"><img src="https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python"></a>
+  <a href="https://www.postgresql.org"><img src="https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat-square&logo=postgresql&logoColor=white" alt="PostgreSQL"></a>
+</p>
 
-## 📋 Table of Contents
-
-- [Overview](#overview)
-- [Key Features](#key-features)
-- [Architecture](#architecture)
-- [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
-- [Project Structure](#project-structure)
-- [Documentation](#documentation)
+</div>
 
 ---
 
-## Overview
+## What is EquiMind?
 
-**EquiMind** is an AI-enhanced equity research platform designed for the S&P 500 universe. It combines classical financial analysis (fundamental scoring, technical indicators) with locally hosted AI-generated summaries to provide explainable, transparent stock insights — all without relying on cloud-based AI APIs.
+**EquiMind** is a batch-driven equity research platform for the S&amp;P 500 universe. It fuses classical financial analysis — fundamental scoring, technical indicators, and market data — with locally-hosted AI summaries via LM Studio. No cloud AI APIs. No real-time trading infrastructure. Just explainable, reproducible, cached insights.
 
-Unlike real-time trading platforms, EquiMind uses a **batch data pipeline** architecture that fetches, validates, and caches market data on a scheduled basis. This provides reliability, reproducibility, and independence from live API availability during demonstrations.
+> **Design Philosophy:** *Data density over decoration. Every pixel earns its place. No dark patterns. No engagement hacking.*
+
+### Why Batch-Driven?
+
+Unlike real-time trading platforms, EquiMind uses a **scheduled data pipeline** that ingests, validates, normalizes, and caches market data. This gives you:
+
+- **Reliability** — Your demo works even if Yahoo Finance is down.
+- **Reproducibility** — Same inputs, same outputs, every time.
+- **Zero API Costs** — No paid market data or AI API keys required.
+- **Explainability** — Every metric carries a source and a timestamp.
 
 ---
 
-## Key Features
+## Features
 
-| Feature | Description |
-|---|---|
-| **Dashboard** | Market overview with portfolio summary and data freshness indicators |
-| **Stock Search & Detail** | Search any S&P 500 stock, view price history, fundamentals, and AI summaries |
-| **EquiMind Score** | Explainable 0–100 composite score based on profitability, growth, and valuation |
-| **Technical Analysis** | RSI, MACD, Bollinger Bands, and Moving Averages with interactive charts |
-| **AI Summaries** | Structured, locally generated stock analysis via LM Studio (bull case, risks, sentiment) |
-| **Screener** | Filter stocks by fundamental and technical criteria |
-| **Watchlist & Portfolio** | Track and manage personal stock selections |
-| **Data Pipeline** | Automated batch ingestion with validation, normalization, and freshness tracking |
-| **Demo Mode** | Reproducible demo dataset for reliable presentations |
+<table>
+<tr>
+<td width="50%">
+
+### Market Intelligence
+- **Market Dashboard** — S&amp;P 500, NASDAQ, DOW indices with interactive area charts
+- **Sector Heatmap** — 11 GICS sectors colored by daily performance
+- **Top Movers** — Gainers, losers, and most active with sparklines
+- **News &amp; Sentiment** — Financial headlines with Bullish / Neutral / Bearish tags
+
+</td>
+<td width="50%">
+
+### Stock Analysis
+- **Stock Search** — Autocomplete across 500+ S&amp;P 500 tickers
+- **Fundamental Score** — Transparent 4-pillar scoring (Profitability · Growth · Financial Health · Valuation)
+- **Technical Indicators** — RSI, MACD, Bollinger Bands, 20/50-day Moving Averages
+- **AI Smart Summary** — Structured LLM output (bull case, risks, sentiment) from local LM Studio
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### Portfolio &amp; Tracking
+- **Watchlist** — Track stocks with real-time price updates (from cache)
+- **Portfolio Tracker** — Manual holdings entry with P&amp;L and return calculations
+- **Stock Comparison** — Side-by-side comparison of 2–4 tickers
+- **Stock Screener** — Multi-criteria filter with sortable results
+
+</td>
+<td width="50%">
+
+### Data Infrastructure
+- **Batch Pipeline** — Python ingestion with validation, normalization, and freshness tracking
+- **Data Quality Layer** — Source attribution and last-updated timestamps on every metric
+- **Demo Mode** — Fully functional with seeded data; zero external API keys needed
+- **Pipeline Status** — Internal admin view for ingestion health and coverage
+
+</td>
+</tr>
+</table>
 
 ---
 
 ## Architecture
 
 ```
-┌─────────────┐     ┌──────────────────┐     ┌──────────────┐
-│   React UI  │────▶│  Spring Boot API │────▶│  PostgreSQL  │
-│  (Frontend) │◀────│   (Backend)      │◀────│  (Database)  │
-└─────────────┘     └──────────────────┘     └──────┬───────┘
-                            │                       ▲
-                            │                       │
-                            ▼                       │
-                    ┌──────────────┐     ┌──────────┴───────┐
-                    │  LM Studio   │     │  Python Pipeline  │
-                    │  (Local LLM) │     │  (Batch Ingestion)│
-                    └──────────────┘     └──────────────────┘
-                                                 │
-                                                 ▼
-                                         ┌──────────────┐
-                                         │ Yahoo Finance │
-                                         │   (Source)    │
-                                         └──────────────┘
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                              CLIENT LAYER                                   │
+│  ┌───────────────────────────────────────────────────────────────────────┐  │
+│  │                         React 19 SPA                                  │  │
+│  └───────────────────────────────────┬───────────────────────────────────┘  │
+└──────────────────────────────────────┼──────────────────────────────────────┘
+                                       │ REST / JSON
+                                       ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                              API LAYER                                      │
+│  ┌───────────────────────────────────────────────────────────────────────┐  │
+│  │                      Spring Boot 4 (Java 21)                          │  │
+│  └───────────────────────────────────┬───────────────────────────────────┘  │
+└──────────────────────────────────────┼──────────────────────────────────────┘
+                                       │ JDBC
+                                       ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                              DATA LAYER                                     │
+│  ┌───────────────────────────────────────────────────────────────────────┐  │
+│  │                        PostgreSQL 18                                  │  │
+│  └───────────────────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────────────────┘
+       ▲                                                              ▲
+       │ Batch Ingestion                                              │ Inference
+┌──────┴──────────────────────────┐                    ┌──────────────┴──────────┐
+│      PYTHON PIPELINE            │                    │      LM STUDIO          │
+│  (yfinance, TA-Lib, pandas)     │                    │  (Local Llama 3)        │
+└─────────────────────────────────┘                    └─────────────────────────┘
 ```
 
 ---
@@ -75,28 +123,28 @@ Unlike real-time trading platforms, EquiMind uses a **batch data pipeline** arch
 ## Tech Stack
 
 | Layer | Technology |
-|---|---|
-| **Frontend** | React 18, Chart.js / Recharts |
-| **Backend API** | Java 21, Spring Boot 3.x, Spring Security, Spring Data JPA |
-| **Database** | PostgreSQL 16 |
-| **Data Pipeline** | Python 3.11+, pandas, yfinance, TA-Lib |
-| **AI Engine** | LM Studio (local LLM inference) |
-| **Containerization** | Docker, Docker Compose |
-| **Authentication** | JWT-based authentication |
+|-------|------------|
+| **Frontend** | React 19, Vite, Chart.js, React Router |
+| **Backend API** | Java 21, Spring Boot 4.x, Spring Security, Spring Data JPA |
+| **Database** | PostgreSQL 18 |
+| **Data Pipeline** | Python 3.12+, pandas, yfinance, TA-Lib |
+| **AI Engine** | LM Studio (Local LLM Inference) |
 
 ---
 
-## Getting Started
+## Local Setup (Offline Mode)
 
 ### Prerequisites
 
 - Java 21+ ([Adoptium Temurin](https://adoptium.net/))
 - Node.js 20+ ([nodejs.org](https://nodejs.org/))
-- Python 3.11+ ([python.org](https://www.python.org/))
-- PostgreSQL 16+ ([postgresql.org](https://www.postgresql.org/))
+- Python 3.12+ ([python.org](https://www.python.org/))
+- PostgreSQL 18+ ([postgresql.org](https://www.postgresql.org/))
 - LM Studio ([lmstudio.ai](https://lmstudio.ai/)) — needed in Phase 5
 
-### Setup
+> **Note**: This project runs entirely offline on your local machine. No cloud deployment, no Docker required.
+
+### Setup Instructions
 
 ```bash
 # Clone the repository
@@ -107,8 +155,8 @@ cd Stock-Analysis
 cp .env.example .env
 
 # 1. Create database & load schema
-createdb equimind
-psql -d equimind -f sql/schema.sql
+createdb equimind -U postgres
+psql -d equimind -U postgres -f sql/schema.sql
 
 # 2. Start Backend (Terminal 1)
 cd backend
@@ -122,75 +170,34 @@ npm run dev
 # → http://localhost:5173
 ```
 
-
-> **Note**: This project runs entirely offline on your local machine. No cloud deployment, no Docker required.
-
 ### Demo Mode
 
 Set `DATA_MODE=DEMO` in your `.env` file to use pre-loaded data without external API calls.
 
 ---
 
-## Project Structure
+## Contributing
 
-```
-equimind/
-├── frontend/               # React frontend application
-│   ├── src/
-│   │   ├── components/     # Reusable UI components
-│   │   ├── pages/          # Page-level components
-│   │   ├── services/       # API client services
-│   │   └── utils/          # Utility functions
-│   └── package.json
-│
-├── backend/                # Spring Boot backend API
-│   └── src/main/java/
-│       └── com/equimind/
-│           ├── controller/ # REST controllers
-│           ├── service/    # Business logic
-│           ├── repository/ # Data access layer
-│           ├── model/      # Entity classes
-│           └── config/     # Configuration
-│
-├── data-pipeline/          # Python batch data pipeline
-│   ├── ingestion/          # Data fetching modules
-│   ├── validation/         # Data quality checks
-│   ├── indicators/         # Technical indicator calculations
-│   ├── ai/                 # LM Studio integration
-│   └── main.py             # Pipeline entry point
-│
-├── sql/                    # Database schemas and migrations
-├── docker-compose.yml      # Container orchestration
-├── docs/                   # Project documentation
-│   ├── PROBLEM_STATEMENT.md
-│   ├── LITERATURE_SURVEY.md
-│   ├── PROJECT_TIMELINE.md
-│   └── REQUIREMENTS.md
-└── README.md
-```
+We welcome contributions — bug fixes, documentation improvements, and feature suggestions.
 
----
+1. **Fork** the repository
+2. **Branch** from `main`: `git checkout -b feature/your-feature`
+3. **Commit** with clear messages: `git commit -m "feat: add sector heatmap to dashboard"`
+4. **Push** and open a **Pull Request**
 
-## Documentation
+### Commit Convention
 
-| Document | Description |
-|---|---|
-| [Problem Statement](docs/PROBLEM_STATEMENT.md) | Project motivation, objectives, and scope |
-| [Literature Survey](docs/LITERATURE_SURVEY.md) | Review of related work, tools, and research |
-| [Project Timeline](docs/PROJECT_TIMELINE.md) | Semester-wise development schedule |
-| [Requirements](docs/REQUIREMENTS.md) | Functional and non-functional requirements |
+| Prefix | Purpose |
+|--------|---------|
+| `feat:` | New feature |
+| `fix:` | Bug fix |
+| `docs:` | Documentation only |
+| `refactor:` | Code restructuring |
+| `test:` | Adding or updating tests |
+| `chore:` | Maintenance tasks |
 
 ---
 
 ## License
 
-This project is developed as part of an academic semester project.
-
----
-
-## Acknowledgements
-
-- [Yahoo Finance](https://finance.yahoo.com/) — Market data source
-- [LM Studio](https://lmstudio.ai/) — Local LLM inference
-- [Spring Boot](https://spring.io/projects/spring-boot) — Backend framework
-- [React](https://react.dev/) — Frontend library
+EquiMind is released under the **MIT License**. See [LICENSE](LICENSE) for details.
