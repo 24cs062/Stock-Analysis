@@ -8,6 +8,8 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/24cs062/Stock-Analysis/actions"><img src="https://img.shields.io/github/actions/workflow/status/24cs062/Stock-Analysis/ci.yml?branch=main&style=flat-square&logo=github-actions&logoColor=white&label=CI" alt="CI"></a>
+  <a href="https://github.com/24cs062/Stock-Analysis/releases"><img src="https://img.shields.io/github/v/release/24cs062/Stock-Analysis?style=flat-square&logo=github&logoColor=white&label=Release" alt="Release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square" alt="License"></a>
   <br>
   <a href="https://www.java.com"><img src="https://img.shields.io/badge/Java-21-ED8B00?style=flat-square&logo=openjdk&logoColor=white" alt="Java 21"></a>
@@ -15,6 +17,14 @@
   <a href="https://react.dev"><img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React"></a>
   <a href="https://www.python.org"><img src="https://img.shields.io/badge/Python-3.12+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python"></a>
   <a href="https://www.postgresql.org"><img src="https://img.shields.io/badge/PostgreSQL-18-4169E1?style=flat-square&logo=postgresql&logoColor=white" alt="PostgreSQL"></a>
+  <a href="https://www.docker.com"><img src="https://img.shields.io/badge/Docker-Compose-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker"></a>
+</p>
+
+<p align="center">
+  <a href="#quick-start"><strong>Quick Start</strong></a> ·
+  <a href="#architecture"><strong>Architecture</strong></a> ·
+  <a href="#documentation"><strong>Docs</strong></a> ·
+  <a href="#contributing"><strong>Contributing</strong></a>
 </p>
 
 </div>
@@ -85,94 +95,265 @@ Unlike real-time trading platforms, EquiMind uses a **scheduled data pipeline** 
 
 ---
 
+## Quick Start
+
+The fastest way to run EquiMind is with Docker Compose. This spins up the full stack — React frontend, Spring Boot API, PostgreSQL, and the Python data pipeline — in under 2 minutes.
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/24cs062/Stock-Analysis.git
+cd Stock-Analysis
+
+# 2. Start the entire stack
+docker-compose up -d
+
+# 3. Seed the database with S&P 500 demo data
+docker-compose exec data-pipeline python main.py --mode demo
+
+# 4. Open the app
+open http://localhost:3000
+```
+
+| Service | URL | Description |
+|---------|-----|-------------|
+| Frontend | http://localhost:3000 | React application |
+| API | http://localhost:8080 | Spring Boot REST API |
+| Database | postgresql://localhost:5432/equimind | PostgreSQL 18 |
+| LM Studio | http://localhost:1234 | Local LLM inference (optional) |
+
+### Demo Mode (No External APIs)
+
+```bash
+DATA_MODE=demo docker-compose up -d
+```
+
+Runs entirely on pre-seeded data. No Yahoo Finance. No API keys. Perfect for presentations and offline development.
+
+---
+
 ## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                              CLIENT LAYER                                   │
-│  ┌───────────────────────────────────────────────────────────────────────┐  │
-│  │                         React 19 SPA                                  │  │
-│  └───────────────────────────────────┬───────────────────────────────────┘  │
-└──────────────────────────────────────┼──────────────────────────────────────┘
-                                       │ REST / JSON
-                                       ▼
+│                              CLIENT LAYER                                    │
+│  ┌─────────────────────────────────────────────────────────────────────────┐│
+│  │                         React 19 SPA                                     ││
+│  │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌───────────────────┐ ││
+│  │  │  Dashboard  │ │   Stocks    │ │  Screener   │ │    Portfolio      │ ││
+│  │  │   (Recharts)│ │  (Detail)   │ │  (Filters)  │ │   (P&amp;L Calc)     │ ││
+│  │  └──────┬──────┘ └──────┬──────┘ └──────┬──────┘ └─────────┬─────────┘ ││
+│  │         └─────────────────┴─────────────────┴──────────────────┘          ││
+│  └────────────────────────────────────────┬──────────────────────────────────┘│
+└───────────────────────────────────────────┼──────────────────────────────────┘
+                                            │ REST / JSON
+                                            ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                              API LAYER                                      │
-│  ┌───────────────────────────────────────────────────────────────────────┐  │
-│  │                      Spring Boot 4 (Java 21)                          │  │
-│  └───────────────────────────────────┬───────────────────────────────────┘  │
-└──────────────────────────────────────┼──────────────────────────────────────┘
-                                       │ JDBC
-                                       ▼
+│                              API LAYER                                       │
+│  ┌─────────────────────────────────────────────────────────────────────────┐│
+│  │                      Spring Boot 4.0.7 (Java 21)                       ││
+│  │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────────┐ ││
+│  │  │   Auth   │ │  Market  │ │  Stocks  │ │    AI    │ │   Pipeline   │ ││
+│  │  │  (JWT)   │ │  (REST)  │ │  (REST)  │ │  (REST)  │ │   (Admin)    │ ││
+│  │  └────┬─────┘ └────┬─────┘ └────┬─────┘ └────┬─────┘ └──────┬───────┘ ││
+│  │       └─────────────┴─────────────┴─────────────┴────────────────┘      ││
+│  │                              Spring Data JPA                             ││
+│  └────────────────────────────────────────┬──────────────────────────────────┘│
+└───────────────────────────────────────────┼──────────────────────────────────┘
+                                            │ JDBC
+                                            ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                              DATA LAYER                                     │
-│  ┌───────────────────────────────────────────────────────────────────────┐  │
-│  │                        PostgreSQL 18                                  │  │
-│  └───────────────────────────────────────────────────────────────────────┘  │
+│                              DATA LAYER                                      │
+│  ┌─────────────────────────────────────────────────────────────────────────┐│
+│  │                        PostgreSQL 18                                     ││
+│  │  ┌─────────┐ ┌─────────┐ ┌─────────────┐ ┌─────────────┐ ┌───────────┐ ││
+│  │  │  User   │ │  Stock  │ │  Historical │ │  Technical  │ │   News    │ ││
+│  │  │  Data   │ │  Data   │ │   Prices    │ │ Indicators  │ │  Articles │ ││
+│  │  └─────────┘ └─────────┘ └─────────────┘ └─────────────┘ └───────────┘ ││
+│  └─────────────────────────────────────────────────────────────────────────┘│
 └─────────────────────────────────────────────────────────────────────────────┘
        ▲                                                              ▲
-       │ Batch Ingestion                                              │ Inference
+       │                                                              │
+       │ Batch Ingestion                                              │ LLM Inference
+       │                                                              │
 ┌──────┴──────────────────────────┐                    ┌──────────────┴──────────┐
 │      PYTHON PIPELINE            │                    │      LM STUDIO          │
-│  (yfinance, TA-Lib, pandas)     │                    │  (Local Llama 3)        │
-└─────────────────────────────────┘                    └─────────────────────────┘
+│  ┌─────────┐  ┌─────────┐      │                    │  ┌───────────────────┐  │
+│  │  Fetch  │  │ Validate│      │                    │  │  Llama 3.1 8B     │  │
+│  │(yfinance│  │  Layer  │      │                    │  │  Mistral 7B       │  │
+│  │  news)  │  │         │      │                    │  │  (GGUF)           │  │
+│  └────┬────┘  └────┬────┘      │                    │  └───────────────────┘  │
+│       └─────────────┘           │                    │                         │
+│  ┌─────────┐  ┌─────────┐      │                    │  Structured prompting   │
+│  │Normalize│  │Calculate│      │                    │  Fallback to cached     │
+│  │         │  │   TA    │      │                    │                         │
+│  └────┬────┘  └────┬────┘      │                    └─────────────────────────┘
+│       └─────────────┘           │
+│  ┌───────────────────────────┐  │
+│  │     PostgreSQL Upsert     │  │
+│  │   (with data_status)      │  │
+│  └───────────────────────────┘  │
+└─────────────────────────────────┘
 ```
+
+### Data Flow
+
+1. **Ingestion** — Python fetches market data from Yahoo Finance via `yfinance` and news from free sources.
+2. **Validation** — Schema checks, range validation, and anomaly detection.
+3. **Normalization** — Unit standardization, currency normalization, missing data handling.
+4. **Technical Calculation** — RSI, MACD, Bollinger, MA computed via `TA-Lib` / `pandas-ta`.
+5. **AI Summaries** — Structured prompts sent to LM Studio; JSON responses stored.
+6. **Persistence** — All data upserted to PostgreSQL with `last_updated` and `data_status` fields.
+7. **Serving** — Spring Boot API serves cached data to the React frontend.
 
 ---
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|------------|
-| **Frontend** | React 19, Vite, Chart.js, React Router |
-| **Backend API** | Java 21, Spring Boot 4.0.7, Spring Security, Spring Data JPA |
-| **Database** | PostgreSQL 18 |
-| **Data Pipeline** | Python 3.12+, pandas, yfinance, TA-Lib |
-| **AI Engine** | LM Studio (Local LLM Inference) |
+| Layer | Technology | Purpose |
+|-------|------------|---------|
+| **Frontend** | React 19, Vite, Tailwind CSS, Recharts | SPA with interactive charts |
+| **Backend API** | Java 21, Spring Boot 4.0.7, Spring Security, Spring Data JPA | RESTful API, JWT auth, business logic |
+| **Database** | PostgreSQL 18 | Relational store for stocks, prices, users, news |
+| **Data Pipeline** | Python 3.12+, pandas, yfinance, TA-Lib, requests | Batch ingestion, validation, TA calculation |
+| **AI Engine** | LM Studio (OpenAI-compatible local API) | Structured stock summaries without cloud APIs |
+| **Containerization** | Docker, Docker Compose | Full-stack local deployment |
+| **Authentication** | Spring Security + JWT (httpOnly cookies) | Stateless session management |
 
 ---
 
-## Local Setup (Offline Mode)
+## Project Structure
+
+```
+equimind/
+├── 📁 frontend/                    # React 19 SPA
+│   ├── src/
+│   │   ├── components/             # Reusable UI (shadcn/ui style)
+│   │   ├── pages/                  # Route-level pages
+│   │   ├── hooks/                  # Custom React hooks (useAuth, useStockData)
+│   │   ├── services/               # API client (axios/fetch wrapper)
+│   │   ├── types/                  # TypeScript interfaces
+│   │   └── utils/                  # Formatters, constants
+│   ├── public/
+│   ├── index.html
+│   ├── vite.config.ts
+│   ├── tailwind.config.js
+│   └── package.json
+│
+├── 📁 backend/                     # Spring Boot 4.0.7 API
+│   └── src/main/java/com/equimind/
+│       ├── controller/             # REST controllers (Auth, Market, Stocks, AI)
+│       ├── service/                # Business logic & orchestration
+│       ├── repository/             # Spring Data JPA repositories
+│       ├── model/                  # JPA entities
+│       ├── dto/                    # Request/response DTOs
+│       ├── config/                 # Security, CORS, WebClient config
+│       ├── pipeline/               # Pipeline trigger & status endpoints
+│       └── exception/              # Global exception handling
+│   └── src/main/resources/
+│       ├── application.yml         # Profiles: dev / prod / demo
+│       └── db/migration/           # Flyway migrations
+│
+├── 📁 data-pipeline/               # Python batch ingestion
+│   ├── ingestion/
+│   │   ├── yahoo_fetcher.py        # Price & fundamental data
+│   │   └── news_fetcher.py         # Financial news headlines
+│   ├── validation/
+│   │   ├── schema_validator.py     # Type & range checks
+│   │   └── anomaly_detector.py     # Outlier flagging
+│   ├── normalization/
+│   │   └── unit_normalizer.py      # Currency, scale standardization
+│   ├── indicators/
+│   │   ├── moving_averages.py      # SMA, EMA
+│   │   ├── rsi.py                  # Relative Strength Index
+│   │   ├── macd.py                 # MACD line, signal, histogram
+│   │   └── bollinger.py            # Upper/middle/lower bands
+│   ├── ai/
+│   │   ├── prompt_builder.py       # Structured prompt templates
+│   │   └── lmstudio_client.py      # OpenAI-compatible API client
+│   ├── storage/
+│   │   └── postgres_upsert.py      # Batch upsert with conflict handling
+│   ├── config/
+│   │   └── pipeline.yaml           # Tickers, schedule, thresholds
+│   ├── main.py                     # Entry point: fetch → validate → store
+│   └── requirements.txt
+│
+├── 📁 sql/                         # Database schemas
+│   ├── schema.sql                  # Base schema (PostgreSQL)
+│   └── seed/                       # Demo dataset for presentations
+│
+├── 📁 docs/                        # Project documentation
+│   ├── PROBLEM_STATEMENT.md
+│   ├── LITERATURE_SURVEY.md
+│   ├── PROJECT_TIMELINE.md
+│   ├── REQUIREMENTS.md
+│   └── assets/                     # Screenshots, diagrams, logos
+│
+├── docker-compose.yml              # Full stack orchestration
+├── docker-compose.demo.yml         # Demo mode (no external APIs)
+├── Makefile                        # Common dev commands
+├── LICENSE                         # MIT
+└── README.md                       # You are here
+```
+
+---
+
+## Documentation
+
+| Document | Description |
+|----------|-------------|
+| [docs/PROBLEM_STATEMENT.md](docs/PROBLEM_STATEMENT.md) | Motivation, objectives, and project scope |
+| [docs/LITERATURE_SURVEY.md](docs/LITERATURE_SURVEY.md) | Review of related platforms, tools, and research |
+| [docs/PROJECT_TIMELINE.md](docs/PROJECT_TIMELINE.md) | Semester-wise development schedule and milestones |
+| [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md) | Functional & non-functional requirements, use cases |
+
+---
+
+## Development
 
 ### Prerequisites
 
-- Java 21+ ([Adoptium Temurin](https://adoptium.net/))
-- Node.js 22+ ([nodejs.org](https://nodejs.org/))
-- Python 3.12+ ([python.org](https://www.python.org/))
-- PostgreSQL 18+ ([postgresql.org](https://www.postgresql.org/))
-- LM Studio ([lmstudio.ai](https://lmstudio.ai/)) — needed in Phase 5
+- **Java 21+** (OpenJDK or Temurin)
+- **Node.js 22+** and **npm 9+**
+- **Python 3.12+** with `pip`
+- **PostgreSQL 18+**
+- **Docker & Docker Compose** (optional but recommended)
+- **LM Studio** with a loaded GGUF model (optional for AI features)
 
-> **Note**: This project runs entirely offline on your local machine. No cloud deployment, no Docker required.
-
-### Setup Instructions
+### Local Setup (Without Docker)
 
 ```bash
-# Clone the repository
-git clone https://github.com/24cs062/Stock-Analysis.git
-cd Stock-Analysis
+# 1. Database
+createdb equimind
+psql -d equimind -f sql/schema.sql
 
-# Copy environment config
-cp .env.example .env
-
-# 1. Create database & load schema
-createdb equimind -U postgres
-psql -d equimind -U postgres -f sql/schema.sql
-
-# 2. Start Backend (Terminal 1)
+# 2. Backend
 cd backend
 mvnw spring-boot:run
-# → http://localhost:8080/api/health
 
-# 3. Start Frontend (Terminal 2)
+# 3. Data Pipeline (one-time seed + periodic runs)
+cd data-pipeline
+python -m venv .venv
+# On Windows use: .venv\Scripts\activate
+source .venv/bin/activate
+pip install -r requirements.txt
+python main.py --mode demo          # Seed with S&P 500 demo data
+
+# 4. Frontend
 cd frontend
 npm install
 npm run dev
-# → http://localhost:5173
 ```
 
-### Demo Mode
+### Makefile Commands
 
-Set `DATA_MODE=DEMO` in your `.env` file to use pre-loaded data without external API calls.
+```bash
+make build          # Build all services
+make up             # docker-compose up -d
+make down           # docker-compose down
+make seed           # Run demo seed
+make test           # Run backend + frontend tests
+make lint           # Run ESLint + Spotless
+```
 
 ---
 
@@ -184,6 +365,8 @@ We welcome contributions — bug fixes, documentation improvements, and feature 
 2. **Branch** from `main`: `git checkout -b feature/your-feature`
 3. **Commit** with clear messages: `git commit -m "feat: add sector heatmap to dashboard"`
 4. **Push** and open a **Pull Request**
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for coding standards, commit conventions, and review process.
 
 ### Commit Convention
 
@@ -201,3 +384,25 @@ We welcome contributions — bug fixes, documentation improvements, and feature 
 ## License
 
 EquiMind is released under the **MIT License**. See [LICENSE](LICENSE) for details.
+
+---
+
+## Acknowledgements
+
+- **[Zerodha Kite](https://kite.zerodha.com/)** — Design inspiration for data density and information architecture
+- **[yfinance](https://github.com/ranaroussi/yfinance)** — Reliable market data fetching
+- **[LM Studio](https://lmstudio.ai/)** — Local LLM inference without API costs
+- **[Spring Boot](https://spring.io/projects/spring-boot)** — Opinionated backend framework
+- **[React](https://react.dev/)** — Declarative UI library
+- **[Recharts](https://recharts.org/)** — Composable React charts
+- **[shadcn/ui](https://ui.shadcn.com/)** — Accessible component primitives
+
+---
+
+<div align="center">
+
+**Built for academic demonstration · Not financial advice**
+
+[Discussions](https://github.com/24cs062/Stock-Analysis/discussions)
+
+</div>
