@@ -22,8 +22,8 @@ spring:
 
   security:
     user:
-      name: admin
-      password: admin
+      name: ${API_USERNAME:admin}
+      password: ${API_PASSWORD:admin_password}
 
 logging:
   level:
