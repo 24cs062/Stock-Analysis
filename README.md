@@ -11,10 +11,10 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square" alt="License"></a>
   <br>
   <a href="https://www.java.com"><img src="https://img.shields.io/badge/Java-21-ED8B00?style=flat-square&logo=openjdk&logoColor=white" alt="Java 21"></a>
-  <a href="https://spring.io"><img src="https://img.shields.io/badge/Spring%20Boot-3.x-6DB33F?style=flat-square&logo=spring-boot&logoColor=white" alt="Spring Boot"></a>
-  <a href="https://react.dev"><img src="https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React"></a>
-  <a href="https://www.python.org"><img src="https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python"></a>
-  <a href="https://www.postgresql.org"><img src="https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat-square&logo=postgresql&logoColor=white" alt="PostgreSQL"></a>
+  <a href="https://spring.io"><img src="https://img.shields.io/badge/Spring%20Boot-4.0.7-6DB33F?style=flat-square&logo=spring-boot&logoColor=white" alt="Spring Boot"></a>
+  <a href="https://react.dev"><img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React"></a>
+  <a href="https://www.python.org"><img src="https://img.shields.io/badge/Python-3.12+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python"></a>
+  <a href="https://www.postgresql.org"><img src="https://img.shields.io/badge/PostgreSQL-18-4169E1?style=flat-square&logo=postgresql&logoColor=white" alt="PostgreSQL"></a>
 </p>
 
 </div>
@@ -125,7 +125,7 @@ Unlike real-time trading platforms, EquiMind uses a **scheduled data pipeline** 
 | Layer | Technology |
 |-------|------------|
 | **Frontend** | React 19, Vite, Chart.js, React Router |
-| **Backend API** | Java 21, Spring Boot 4.x, Spring Security, Spring Data JPA |
+| **Backend API** | Java 21, Spring Boot 4.0.7, Spring Security, Spring Data JPA |
 | **Database** | PostgreSQL 18 |
 | **Data Pipeline** | Python 3.12+, pandas, yfinance, TA-Lib |
 | **AI Engine** | LM Studio (Local LLM Inference) |
@@ -137,7 +137,7 @@ Unlike real-time trading platforms, EquiMind uses a **scheduled data pipeline** 
 ### Prerequisites
 
 - Java 21+ ([Adoptium Temurin](https://adoptium.net/))
-- Node.js 20+ ([nodejs.org](https://nodejs.org/))
+- Node.js 22+ ([nodejs.org](https://nodejs.org/))
 - Python 3.12+ ([python.org](https://www.python.org/))
 - PostgreSQL 18+ ([postgresql.org](https://www.postgresql.org/))
 - LM Studio ([lmstudio.ai](https://lmstudio.ai/)) — needed in Phase 5
