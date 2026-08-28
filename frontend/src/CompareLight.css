@@ -1,0 +1,51 @@
+.compare-clone {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #18304e;
+  background: #fff;
+  height: 100%;
+  overflow-y: auto;
+}
+.compare-clone .content { padding: 32px 30px; margin: 0 auto; max-width: 1200px; padding-bottom: 50px;}
+.compare-clone .title { font-size: 26px; font-weight: 500; line-height: 28px; color: #122239; }
+.compare-clone .subtitle { font-size: 13px; color: #8995a6; margin-top: 8px; text-transform: uppercase; font-family: monospace; letter-spacing: 0.5px;}
+
+/* Selectors */
+.compare-clone .controls { display: flex; gap: 16px; margin-top: 24px; align-items: center; flex-wrap: wrap; }
+.compare-clone .select-input { height: 42px; width: 160px; border: 1px solid #e3e8ee; border-radius: 6px; padding: 0 16px; font-size: 15px; font-weight: 600; color: #122239; outline: none; transition: border 0.2s; background: #fff;}
+.compare-clone .select-input:focus { border-color: #2b6ce8; box-shadow: 0 0 0 3px rgba(43,108,232,0.1); }
+.compare-clone .compare-btn { height: 42px; padding: 0 24px; background: #2b6ce8; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; color: #fff; cursor: pointer; transition: background 0.2s;}
+.compare-clone .compare-btn:hover { background: #1f5ed4; }
+
+/* Grid */
+.compare-clone .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 32px; }
+.compare-clone .panel { border: 1px solid #e2e7ed; border-radius: 6px; overflow: hidden; background: #fff;}
+.compare-clone .panel-head { height: 64px; border-bottom: 1px solid #e7ecf1; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; font-size: 15px; font-weight: 600; color: #17304d; }
+.compare-clone .panel-title { font-size: 18px; font-weight: 700; color: #122239; }
+.compare-clone .panel-price { font-size: 14px; font-weight: 600; font-family: monospace; }
+.compare-clone .pos { color: #12a874; }
+.compare-clone .neg { color: #ff4a56; }
+.compare-clone .chart-container { padding: 16px; height: 250px; }
+.compare-clone .tooltip { background: #fff; border: 1px solid #e3e8ee; padding: 8px 12px; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+.compare-clone .tooltip-label { font-size: 11px; color: #8995a6; font-family: monospace; margin: 0; }
+.compare-clone .tooltip-val { font-size: 14px; color: #122239; font-family: monospace; font-weight: 700; margin: 4px 0 0 0;}
+
+/* Table */
+.compare-clone .table-panel { border: 1px solid #e2e7ed; border-radius: 6px; overflow: hidden; background: #fff; margin-top: 32px;}
+.compare-clone .table-head { height: 50px; border-bottom: 1px solid #e7ecf1; background: #fbfcfe; display: flex; justify-content: space-between; align-items: center; padding: 0 20px;}
+.compare-clone .table-title { font-size: 16px; font-weight: 700; color: #122239; flex: 1; text-align: center;}
+.compare-clone .table-title.side { flex: 1; text-align: left; }
+.compare-clone .table-title.side.right { text-align: right; }
+.compare-clone .table-title.center { color: #8995a6; font-size: 12px; letter-spacing: 0.5px;}
+
+.compare-clone table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.compare-clone td { height: 48px; border-bottom: 1px solid #edf1f5; font-size: 14px; padding: 0 20px; font-weight: 600; color: #19344f;}
+.compare-clone td.metric { text-align: center; color: #718096; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase;}
+.compare-clone td.val-a { text-align: left; }
+.compare-clone td.val-b { text-align: right; }
+.compare-clone td.winner { color: #12a874; }
+
+.compare-clone .loading-state { text-align: center; padding: 60px 0; color: #8995a6; font-size: 14px; font-weight: 500; font-family: monospace; letter-spacing: 1px;}
+
+@media(max-width: 1024px) {
+  .compare-clone .grid { grid-template-columns: 1fr; }
+}

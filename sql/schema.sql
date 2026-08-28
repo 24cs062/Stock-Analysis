@@ -250,5 +250,23 @@ CREATE INDEX idx_news_stock ON news(stock_id);
 CREATE INDEX idx_news_published ON news(published_at DESC);
 
 -- ============================================
+-- 12. TRANSACTIONS
+-- ============================================
+CREATE TABLE IF NOT EXISTS transactions (
+    id              SERIAL PRIMARY KEY,
+    user_id         INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    stock_id        INTEGER NOT NULL REFERENCES stocks(id) ON DELETE CASCADE,
+    transaction_type VARCHAR(10) NOT NULL CHECK (transaction_type IN ('BUY', 'SELL')),
+    quantity        DECIMAL(12, 4) NOT NULL,
+    price_per_share DECIMAL(12, 4) NOT NULL,
+    total_amount    DECIMAL(12, 4) NOT NULL,
+    transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_transactions_user ON transactions(user_id);
+CREATE INDEX idx_transactions_stock ON transactions(stock_id);
+CREATE INDEX idx_transactions_date ON transactions(transaction_date DESC);
+
+-- ============================================
 -- DONE
 -- ============================================

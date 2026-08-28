@@ -13,7 +13,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none     # Phase 1: no entities. Switch to 'validate' in Phase 3.
+      ddl-auto: validate     # Switched to 'validate' in Phase 3.
     show-sql: false
     properties:
       hibernate:

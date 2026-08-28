@@ -1,0 +1,72 @@
+.portfolio-clone {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #162b47;
+  font-size: 14px;
+  background: #fff;
+  height: 100%;
+}
+
+.portfolio-clone .main { min-width: 0; background: #fff; height: 100%; overflow-y: auto; }
+.portfolio-clone .content { padding: 30px 40px; max-width: 1200px; margin: 0 auto; }
+
+.portfolio-clone .page-head { display: flex; align-items: flex-start; }
+.portfolio-clone .page-title { font-size: 24px; font-weight: 700; line-height: 28px; color: #101f35; }
+.portfolio-clone .subtitle { font-size: 12px; color: #718097; margin-top: 5px; letter-spacing: 0.5px; text-transform: uppercase; }
+
+.portfolio-clone .metrics { margin-top: 24px; height: 110px; border: 1px solid #e2e8ef; border-radius: 8px; display: grid; grid-template-columns: repeat(4, 1fr); overflow: hidden; }
+.portfolio-clone .metric { padding: 20px 24px; border-right: 1px solid #e3e8ee; display: flex; flex-direction: column; justify-content: center; }
+.portfolio-clone .metric:last-child { border-right: 0; }
+.portfolio-clone .metric-label { font-size: 12px; color: #627288; letter-spacing: 0.5px; text-transform: uppercase; }
+.portfolio-clone .metric-value { margin-top: 12px; font-size: 32px; line-height: 1; color: #162b47; font-weight: 600; }
+.portfolio-clone .metric-green { color: #00a775; }
+.portfolio-clone .metric-red { color: #f34e65; }
+
+.portfolio-clone .mid { display: grid; grid-template-columns: 1fr 340px; gap: 24px; margin-top: 24px; }
+.portfolio-clone .card { border: 1px solid #e2e8ef; border-radius: 8px; background: #fff; }
+
+.portfolio-clone .chart-card { height: 350px; padding: 24px 24px 16px; display: flex; flex-direction: column; }
+.portfolio-clone .card-title { font-size: 14px; font-weight: 700; color: #152942; text-transform: uppercase; }
+.portfolio-clone .trend { float: right; color: #8894a5; font-size: 11px; font-weight: 400; letter-spacing: 0.5px; }
+
+.portfolio-clone .chart { flex: 1; margin-top: 16px; position: relative; }
+/* Using Recharts inside .chart, so we don't need the static SVG styles, but keeping grid lines */
+
+.portfolio-clone .alloc { padding: 24px; display: flex; flex-direction: column; }
+.portfolio-clone .alloc-bar { height: 12px; border-radius: 6px; margin-top: 24px; display: flex; overflow: hidden; }
+.portfolio-clone .seg1 { background: #625eef; }
+.portfolio-clone .seg2 { background: #21a7de; }
+.portfolio-clone .seg3 { background: #25b2a1; }
+.portfolio-clone .seg4 { background: #ffae13; }
+.portfolio-clone .seg5 { background: #f34e65; }
+.portfolio-clone .seg-other { background: #cbd5e1; }
+
+.portfolio-clone .alloc-list { margin-top: 24px; flex: 1; }
+.portfolio-clone .alloc-row { height: 42px; display: grid; grid-template-columns: 20px 1fr 60px 110px; align-items: center; border-bottom: 1px solid #f1f3f5; }
+.portfolio-clone .alloc-row:last-child { border-bottom: 0; }
+.portfolio-clone .swatch { width: 10px; height: 10px; border-radius: 50%; }
+.portfolio-clone .sw1 { background: #625eef; }
+.portfolio-clone .sw2 { background: #21a7de; }
+.portfolio-clone .sw3 { background: #25b2a1; }
+.portfolio-clone .sw4 { background: #ffae13; }
+.portfolio-clone .sw5 { background: #f34e65; }
+.portfolio-clone .sw-other { background: #cbd5e1; }
+
+.portfolio-clone .alloc-name { font-size: 14px; color: #162b47; }
+.portfolio-clone .alloc-pct { font-size: 12px; color: #78869a; text-align: right; }
+.portfolio-clone .alloc-val { font-size: 14px; font-weight: 700; text-align: right; color: #162b47; }
+
+.portfolio-clone .holdings { margin-top: 24px; padding: 24px 0 0; }
+.portfolio-clone .hold-title { padding: 0 24px; font-size: 14px; font-weight: 700; text-transform: uppercase; color: #152942; }
+.portfolio-clone .hold-table { width: 100%; border-collapse: collapse; margin-top: 16px; table-layout: fixed; }
+.portfolio-clone .hold-table th { height: 44px; text-align: left; font-size: 11px; font-weight: 600; color: #68788f; border-top: 1px solid #edf0f3; border-bottom: 1px solid #edf0f3; padding: 0 24px; letter-spacing: 0.5px; }
+.portfolio-clone .hold-table td { height: 60px; border-bottom: 1px solid #eff2f5; padding: 0 24px; font-size: 14px; color: #1c324d; }
+.portfolio-clone .hold-table th.r, .portfolio-clone .hold-table td.r { text-align: right; }
+.portfolio-clone .sym { font-weight: 700; font-size: 15px; color: #122641; }
+.portfolio-clone .company { color: #6c7d93; font-size: 13px; }
+.portfolio-clone .green { color: #00a775 !important; font-weight: 600; }
+.portfolio-clone .red { color: #f34e65 !important; font-weight: 600; }
+
+@media(max-width: 1200px) {
+  .portfolio-clone .mid { grid-template-columns: 1fr; }
+  .portfolio-clone .chart-card { margin-bottom: 24px; }
+}

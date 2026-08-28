@@ -1,0 +1,110 @@
+.equimind-clone {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #10213b;
+  background: #f7f9fc;
+  font-size: 15.5px;
+  min-height: 100vh;
+  margin: -1rem; /* Offset the 1rem padding from the main wrapper */
+}
+.equimind-clone button, .equimind-clone input { font: inherit; }
+.equimind-clone .app { display: grid; grid-template-columns: 1fr; min-height: 100vh; }
+/* Note: We omit the sidebar CSS since we are keeping our global App.jsx sidebar for navigation, 
+   we will just use the `.main` and `.topbar` sections from the snippet. */
+.equimind-clone .main { min-width: 0; }
+.equimind-clone .topbar { height: 40px; background: #fff; border-bottom: 1px solid #edf1f6; display: flex; align-items: center; padding: 0 17px 0 24px; }
+.equimind-clone .ticker { display: flex; gap: 30px; font-size: 12.5px; color: #516174; }
+.equimind-clone .ticker strong { font-weight: 500; color: #4d6077; }
+.equimind-clone .ticker .up { color: #00a86b; }
+.equimind-clone .ticker .down { color: #ef476f; }
+.equimind-clone .search { margin-left: auto; width: 202px; height: 34px; border: 1px solid #e6ebf2; background: #fafcff; border-radius: 6px; padding: 0 10px; display: flex; align-items: center; color: #91a0b4; font-size: 13.5px; }
+.equimind-clone .search kbd { margin-left: auto; border: 1px solid #e2e8f0; border-radius: 3px; padding: 1px 4px; font-size: 12.5px; background: #fff; }
+.equimind-clone .bell, .equimind-clone .avatar { margin-left: 18px; }
+.equimind-clone .bell { font-size: 18.5px; color: #50627a; }
+.equimind-clone .avatar { width: 22px; height: 28px; border-radius: 50%; background: #e9f2ff; color: #2463db; display: grid; place-items: center; font-size: 12.5px; }
+.equimind-clone .content { padding: 19px; }
+.equimind-clone .market-row { display: grid; grid-template-columns: repeat(4, 1fr) 1.08fr; gap: 13px; }
+.equimind-clone .card { background: #fff; border: 1px solid #e5eaf1; border-radius: 3px; }
+.equimind-clone .quote { height: 85px; padding: 11px 9px; }
+.equimind-clone .quote .label { font-size: 13.5px; color: #58677b; margin-bottom: 8px; }
+.equimind-clone .quote .value { font-size: 19.5px; line-height: 1; font-weight: 700; color: #071933; }
+.equimind-clone .quote .chg { font-size: 12.5px; margin-top: 6px; }
+.equimind-clone .green { color: #0aa878; }
+.equimind-clone .red { color: #f24467; }
+.equimind-clone .margin { padding: 11px 12px; position: relative; }
+.equimind-clone .margin .label { font-size: 13.5px; color: #55657a; }
+.equimind-clone .margin .value { font-size: 19.5px; font-weight: 700; margin-top: 7px; }
+.equimind-clone .margin .used { font-size: 12.5px; color: #66748a; margin-top: 2px; }
+.equimind-clone .margin .add { position: absolute; right: 11px; bottom: 11px; color: #2765da; font-size: 12.5px; cursor: pointer;}
+.equimind-clone .workspace { display: grid; grid-template-columns: minmax(0, 1fr) 252px; gap: 18px; margin-top: 18px; }
+.equimind-clone .leftcol { min-width: 0; }
+.equimind-clone .chart-card { height: 400px; padding: 11px 12px 7px; display: flex; flex-direction: column; }
+.equimind-clone .chart-head { height: 30px; display: flex; align-items: center; }
+.equimind-clone .symbol { font-weight: 800; font-size: 16.5px; margin-right: 7px; }
+.equimind-clone .sub { font-size: 12.5px; color: #718198; }
+.equimind-clone .pill { background: #e7fbf4; color: #0aa878; font-size: 12.5px; padding: 3px 6px; border-radius: 3px; margin-left: 10px; }
+.equimind-clone .periods { margin-left: auto; display: flex; gap: 13px; color: #62738b; font-size: 12.5px; align-items: center; cursor: pointer; }
+.equimind-clone .periods .sel { background: #edf4ff; color: #2563eb; padding: 4px 6px; border-radius: 3px; }
+.equimind-clone .chart { flex: 1; position: relative; overflow: hidden; margin-top: 10px; }
+.equimind-clone .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin-top: 13px; }
+.equimind-clone .depth, .equimind-clone .ticket { height: auto; min-height: 149px; padding: 12px 14px 20px 14px; }
+.equimind-clone .card-title { font-size: 13.5px; color: #3f4f65; margin-bottom: 12px; }
+.equimind-clone .depth-head, .equimind-clone .depth-row { display: grid; grid-template-columns: 1fr 75px 1fr 45px; align-items: center; font-size: 12.5px; height: 28px; }
+.equimind-clone .depth-head { color: #7a8798; font-size: 11.5px; }
+.equimind-clone .depth-row .bid { color: #0aa878; }
+.equimind-clone .depth-row .ask { color: #f24467; }
+.equimind-clone .ticket { position: relative; }
+.equimind-clone .radios { position: absolute; right: 9px; top: 9px; font-size: 11.5px; color: #6a7686; }
+.equimind-clone .radio { display: inline-block; width: 10px; height: 10px; border: 1px solid #8d98a8; border-radius: 50%; vertical-align: -1px; margin-right: 4px; }
+.equimind-clone .radio.on { border-color: #2463eb; box-shadow: inset 0 0 0 2px #fff; background: #2463eb; }
+.equimind-clone .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 6px; }
+.equimind-clone .field label { display: block; color: #758397; font-size: 11.5px; margin-bottom: 4px; }
+.equimind-clone .field input { width: 100%; height: 31px; border: 1px solid #dce3ec; border-radius: 4px; padding: 0 8px; color: #18304e; background: #fff; }
+.equimind-clone .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 9px; }
+.equimind-clone .actions button { height: 26px; border: 0; color: white; font-weight: 700; font-size: 14.5px; border-radius: 3px; cursor: pointer; }
+.equimind-clone .buy { background: #2966e8; }
+.equimind-clone .sell { background: #f33f66; }
+.equimind-clone .margin-req { text-align: center; font-size: 10.5px; color: #8a95a4; margin-top: 7px; }
+.equimind-clone .watch { height: 435px; padding: 0; }
+.equimind-clone .tabs { height: 40px; border-bottom: 1px solid #eef1f5; display: flex; align-items: flex-end; padding: 0 10px; gap: 15px; }
+.equimind-clone .tab { padding-bottom: 8px; font-size: 13.5px; color: #536277; cursor: pointer; }
+.equimind-clone .tab.active { color: #1e64df; border-bottom: 2px solid #1e64df; }
+.equimind-clone .watch-actions { margin-left: auto; display: flex; gap: 12px; padding-bottom: 8px; color: #76869a; cursor: pointer; }
+.equimind-clone .watch-head, .equimind-clone .watch-row { display: grid; grid-template-columns: 1fr 50px 49px; padding: 0 10px; }
+.equimind-clone .watch-head { height: 30px; align-items: center; color: #8390a1; font-size: 11.5px; }
+.equimind-clone .watch-row { height: 52px; align-items: center; border-top: 1px solid #f1f3f7; cursor: pointer; }
+.equimind-clone .watch-row:hover { background: #f7f9fc; }
+.equimind-clone .inst { font-size: 12.5px; color: #112442; font-weight: 600; }
+.equimind-clone .company { font-size: 11.5px; color: #a0a8b5; margin-top: 2px; font-weight: 400; }
+.equimind-clone .last { text-align: right; font-size: 12.5px; font-weight: 600; }
+.equimind-clone .watch-row .chg { text-align: right; font-size: 12.5px; }
+.equimind-clone .positions { margin-top: 19px; height: 194px; padding: 0; overflow-y: auto; }
+.equimind-clone .pos-head { height: 42px; border-bottom: 1px solid #eef1f5; display: flex; align-items: flex-end; padding: 0 13px; gap: 27px; position: sticky; top: 0; background: #fff; z-index: 10; }
+.equimind-clone .pos-tab { padding-bottom: 9px; color: #36506f; font-size: 13.5px; cursor: pointer;}
+.equimind-clone .pos-tab.active { color: #1d63df; border-bottom: 2px solid #1d63df; }
+.equimind-clone .total { margin-left: auto; font-size: 12.5px; color: #617088; position: absolute; right: 13px; bottom: 10px; }
+.equimind-clone .total b { color: #05a876; font-size: 14.5px; margin-left: 11px; }
+.equimind-clone table { border-collapse: collapse; width: 100%; font-size: 12px; }
+.equimind-clone th, .equimind-clone td { height: 40px; border-bottom: 1px solid #f0f2f6; text-align: left; padding: 0 8px; color: #18304e; }
+.equimind-clone th { color: #748399; font-weight: 500; height: 34px; }
+.equimind-clone td.num, .equimind-clone th.num { text-align: right; }
+.equimind-clone .badge { display: inline-block; background: #eff2f5; border-radius: 3px; padding: 2px 4px; margin-right: 5px; font-size: 10.5px; color: #30445f; }
+.equimind-clone .blue { color: #245fe0; }
+.equimind-clone .money { color: #08a875; }
+.equimind-clone .change { color: #08a875; }
+
+@media (max-width:900px) {
+  .equimind-clone .market-row { grid-template-columns: repeat(2, 1fr); }
+  .equimind-clone .workspace { grid-template-columns: 1fr; }
+  .equimind-clone .watch { height: auto; }
+  .equimind-clone .ticker { gap: 12px; }
+}
+@media (max-width:620px) {
+  .equimind-clone .market-row { grid-template-columns: 1fr; }
+  .equimind-clone .bottom-grid { grid-template-columns: 1fr; }
+  .equimind-clone .workspace { display: block; }
+  .equimind-clone .watch { margin-top: 13px; }
+  .equimind-clone .search { width: 130px; }
+  .equimind-clone .ticker { display: none; }
+  .equimind-clone .positions { overflow: auto; }
+  .equimind-clone .positions table { min-width: 860px; }
+}
